@@ -1,0 +1,17 @@
+{
+  "name": "true-tune-tree-prototype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "wallaby.conf.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.14.0"
+  }
+}
