@@ -10,9 +10,18 @@ var app = {
             icon: 'heart.png'
         };
         root.on('before_open.jstree', function (e, data) {
+            function isAlbum(node) {
+                return node.icon == 'album.png';
+            }
+
             if (data.node.id != 'searchNode') {
-                artists.findAlbumsXml(data.node.id)
-                    .then(albums => mapAlbums(albums, data.node));
+                if (isAlbum(data.node)) {
+                    artists.fintTracks(data.node.parent, data.node.text)
+                        .then(albums => mapTracks(albums, data.node));
+                } else {
+                    artists.findAlbumsXml(data.node.id)
+                        .then(albums => mapAlbums(albums, data.node));
+                }
             }
         });
         root.jstree({
@@ -35,6 +44,11 @@ var app = {
         function mapAlbums(albums, parent) {
             clearNode($("#" + parent.id));
             _.each(albums, album=> createNode("#" + parent.id, album.id, album.name, "album"));
+        }
+
+        function mapTracks(tracks, parent) {
+            clearNode($("#" + parent.id));
+            _.each(tracks, track => createNode("#" + parent.id, track.id, track.name, "song"));
         }
 
         function mapArtists(artists) {
