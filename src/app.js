@@ -1,5 +1,13 @@
 var app = {
     init: function (root, searchInput) {
+        function isAlbum(node) {
+            return node.icon == 'album.png';
+        }
+
+        function isTrack(node) {
+            return node.icon == 'song.png';
+        }
+
         var searchNode = {
             id: 'searchNode',
             text: 'Search results..',
@@ -10,9 +18,6 @@ var app = {
             icon: 'heart.png'
         };
         root.on('before_open.jstree', function (e, data) {
-            function isAlbum(node) {
-                return node.icon == 'album.png';
-            }
 
             if (data.node.id != 'searchNode') {
                 if (isAlbum(data.node)) {
@@ -24,6 +29,13 @@ var app = {
                 }
             }
         });
+
+        root.on('select_node.jstree', function (e, data) {
+            if (isTrack(data.node)) {
+                console.log(data.node) //play here
+            }
+        });
+
         root.jstree({
             'core': {
                 'data': [
