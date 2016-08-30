@@ -48,7 +48,7 @@ var app = {
 
         function mapTracks(tracks, parent) {
             clearNode($("#" + parent.id));
-            _.each(tracks, track => createNode("#" + parent.id, track.id, track.name, "song"));
+            _.each(tracks, track => createNode("#" + parent.id, track.id, track.name, "song", true));
         }
 
         function mapArtists(artists) {
@@ -62,13 +62,13 @@ var app = {
             }
         }
 
-        function createNode(parent_node, new_node_id, new_node_text, icon) {
+        function createNode(parent_node, new_node_id, new_node_text, icon, noChildren) {
             root.jstree('create_node', $(parent_node), {
                 "text": new_node_text,
                 "id": new_node_id,
                 'icon': icon + '.png',
                 'state': 'closed',
-                'children': [{text: 'Loading...', state: "disabled"}],
+                'children': noChildren ? undefined : [{text: 'Loading...', state: "disabled"}],
             }, 'last', false, false);
             root.jstree('open_node', $(parent_node))
         }
