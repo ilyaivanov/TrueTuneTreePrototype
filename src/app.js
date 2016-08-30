@@ -11,7 +11,7 @@ var app = {
         };
         root.on('before_open.jstree', function (e, data) {
             if (data.node.id != 'searchNode') {
-                lastfm.findAlbums(data.node.text)
+                artists.findAlbumsXml(data.node.id)
                     .then(albums => mapAlbums(albums, data.node));
             }
         });
@@ -25,12 +25,13 @@ var app = {
             }
         });
 
-        searchInput.keyup(function () {
+        searchInput.keyup(_.debounce(function () {
             clearNode($("#searchNode"));
-            lastfm.findArtists(searchInput.val())
+            artists.findArtistsXml(searchInput.val())
                 .then(a => mapArtists(a))
 
-        });
+        }, 250));
+
         function mapAlbums(albums, parent) {
             clearNode($("#" + parent.id));
             _.each(albums, album=> createNode("#" + parent.id, album.id, album.name, "album"));
@@ -53,7 +54,7 @@ var app = {
                 "id": new_node_id,
                 'icon': icon + '.png',
                 'state': 'closed',
-                'children': [{text: 'Loading...', state: "disabled"}]
+                'children': [{text: 'Loading...', state: "disabled"}],
             }, 'last', false, false);
             root.jstree('open_node', $(parent_node))
         }
