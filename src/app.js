@@ -42,8 +42,9 @@ var app = {
                     searchNode,
                     favorites
                 ],
-                'check_callback': true
-            }
+                'check_callback': true,
+            },
+            "plugins" : [ "wholerow", 'dnd' ]
         });
 
         searchInput.keyup(_.debounce(function () {
