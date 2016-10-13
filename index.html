@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="src/player.css">
+    <link rel="stylesheet" href="src/layout.css">
 </head>
 <body>
 <style>
@@ -33,70 +33,37 @@
     }
 </style>
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false"><span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
-            <a class="navbar-brand" href="#">Brand</a></div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
-                <div class="btn-group player" role="group" aria-label="...">
-                    <button type="button" class="btn btn-default glyphicon glyphicon-backward"></button>
-                    <button type="button" class="btn btn-default glyphicon glyphicon-play"></button>
-                    <button type="button" class="btn btn-default glyphicon glyphicon-forward"></button>
-                    <button type="button" class="btn btn-default range-btn">00:06</button>
-                    <div class="btn btn-default song-range range-btn">
-                        <div class="text-center song-title">Foo Foghters - Album (2014) - Song name</div>
-                        <div class="tracker">
-                            <input type="range" min="0" value="0" class="seek" max="198.844082"
-                                   step="1.9884408199999999"></div>
-                    </div>
-                    <button type="button" class="btn btn-default range-btn">-12:39</button>
-                    <button type="button" class="btn btn-default glyphicon glyphicon-volume-up"></button>
-                    <div class="btn btn-default volume-range range-btn">
-                        <input type="range" min="0" value="0" class="seek" max="198.844082" step="1.9884408199999999">
-                    </div>
-                </div>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                        aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
+<header class="page-header">
+    <h1>Header</h1>
+</header>
+
+<main class="page-content">
+    <nav class="content-navigation">
+        <h1>Search</h1>
+        <input id="searchInput" type="text">
+        <div class="search-results">
+            <div id="jstreeSearch"></div>
         </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
-
-
-<input id="search" class="form-control" type="text">
-<div id="jstree_demo_div">
-</div>
+    </nav>
+    <article class="content-article">
+        <h1>Favorites</h1>
+    </article>
+    <aside class="content-sidebar">
+        <h1>Player</h1>
+    </aside>
+</main>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="src/lastfm.js"></script>
 <script src="src/artists.js"></script>
-
 <script src="src/app.js"></script>
 <script>
-    $(function () {
-        app.init($('#jstree_demo_div'), $('#search'))
-    });
+  $(function () {
+    app.init($('#jstreeSearch'), $('#searchInput'))
+  });
 </script>
 </body>
 </html>

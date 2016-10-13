@@ -56,16 +56,16 @@ var app = {
 
         function mapAlbums(albums, parent) {
             clearNode($("#" + parent.id));
-            _.each(albums, album=> createNode("#" + parent.id, album.id, album.name, "album"));
+            _.each(albums, album=> createNode($("#" + parent.id), album.id, album.name, "album"));
         }
 
         function mapTracks(tracks, parent) {
             clearNode($("#" + parent.id));
-            _.each(tracks, track => createNode("#" + parent.id, track.id, track.name, "song", true));
+            _.each(tracks, track => createNode($("#" + parent.id), track.id, track.name, "song", true));
         }
 
         function mapArtists(artists) {
-            _.each(artists, a=> createNode("#searchNode", a.id, a.name, "artist"));
+            _.each(artists, a=> createNode(null, a.id, a.name, "artist"));
         }
 
         function clearNode(node) {
@@ -75,15 +75,17 @@ var app = {
             }
         }
 
-        function createNode(parent_node, new_node_id, new_node_text, icon, noChildren) {
-            root.jstree('create_node', $(parent_node), {
+        function createNode($parent_node, new_node_id, new_node_text, icon, noChildren) {
+            root.jstree('create_node', $parent_node, {
                 "text": new_node_text,
                 "id": new_node_id,
                 'icon': icon + '.png',
                 'state': 'closed',
                 'children': noChildren ? undefined : [{text: 'Loading...', state: "disabled"}],
             }, 'last', false, false);
-            root.jstree('open_node', $(parent_node))
+            if($parent_node){
+              root.jstree('open_node', $(parent_node))
+            }
         }
     }
 };
