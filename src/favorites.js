@@ -2,10 +2,11 @@ var favorites = (function () {
     return {
         init: function (root) {
             this.root = root;
-            function init() {
+            function init(initialData) {
                 root.jstree({
                     'core': {
-                        'check_callback': true
+                        'check_callback': true,
+                        data: initialData
                     },
                     "plugins": ["wholerow", 'dnd']
                 });
@@ -13,10 +14,12 @@ var favorites = (function () {
                 loadTracksOrAlbums(root);
             }
 
-            init();
-
-            createNode(root, null, "AmbientPlaylist", "Ambient", "heart", true)
-            createNode(root, null, "ElectronicPlaylist", "Electronic", "heart", true)
+            let savedState = JSON.parse(localStorage.getItem('prototypeState'));
+            init(savedState);
+            if (!savedState) {
+                createNode(root, null, "AmbientPlaylist", "Ambient", "heart", true)
+                createNode(root, null, "ElectronicPlaylist", "Electronic", "heart", true)
+            }
         },
         createNode(parentPrefix, node){
             //TODO ugly, use jstree internal id
@@ -25,6 +28,9 @@ var favorites = (function () {
                 $('#' + parentPrefix + 'Playlist'));
             console.log(node.data)
             this.root.jstree('get_node', newNode).data = node.data;
+
+            var json = JSON.stringify(this.root.jstree('get_json'));
+            localStorage.setItem('prototypeState', json);
             console.log(this.root.jstree('get_node', newNode))
         }
     };
