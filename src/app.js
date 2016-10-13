@@ -8,18 +8,15 @@ var app = {
             return node.icon == 'song.png';
         }
 
-        var searchNode = {
-            id: 'searchNode',
-            text: 'Search results..',
-            icon: 'searchIcon.png'
-        };
-        var favorites = {
-            text: 'Favorites',
-            icon: 'heart.png'
-        };
-        root.on('before_open.jstree', function (e, data) {
+        function init() {
+            root.jstree({
+                'core': {
+                    'check_callback': true,
+                },
+                "plugins": ["wholerow", 'dnd']
+            });
 
-            if (data.node.id != 'searchNode') {
+            root.on('before_open.jstree', function (e, data) {
                 if (isAlbum(data.node)) {
                     artists.fintTracks(data.node.parent, data.node.text)
                         .then(albums => mapTracks(albums, data.node));
@@ -27,28 +24,22 @@ var app = {
                     artists.findAlbumsXml(data.node.id)
                         .then(albums => mapAlbums(albums, data.node));
                 }
-            }
-        });
+            });
 
-        root.on('select_node.jstree', function (e, data) {
-            if (isTrack(data.node)) {
-                console.log(data.node) //play here
-            }
-        });
+            root.on('select_node.jstree', function (e, data) {
+                if (isTrack(data.node)) {
+                    console.log(data.node) //play here
+                }
+            });
+        }
 
-        root.jstree({
-            'core': {
-                'data': [
-                    searchNode,
-                    favorites
-                ],
-                'check_callback': true,
-            },
-            "plugins" : [ "wholerow", 'dnd' ]
-        });
+        init();
+
 
         searchInput.keyup(_.debounce(function () {
             clearNode($("#searchNode"));
+            root.jstree("destroy");
+            init();
             artists.findArtistsXml(searchInput.val())
                 .then(a => mapArtists(a))
 
@@ -56,7 +47,7 @@ var app = {
 
         function mapAlbums(albums, parent) {
             clearNode($("#" + parent.id));
-            _.each(albums, album=> createNode($("#" + parent.id), album.id, album.name, "album"));
+            _.each(albums, album => createNode($("#" + parent.id), album.id, album.name, "album"));
         }
 
         function mapTracks(tracks, parent) {
@@ -65,7 +56,7 @@ var app = {
         }
 
         function mapArtists(artists) {
-            _.each(artists, a=> createNode(null, a.id, a.name, "artist"));
+            _.each(artists, a => createNode(null, a.id, a.name, "artist"));
         }
 
         function clearNode(node) {
@@ -81,10 +72,10 @@ var app = {
                 "id": new_node_id,
                 'icon': icon + '.png',
                 'state': 'closed',
-                'children': noChildren ? undefined : [{text: 'Loading...', state: "disabled"}],
+                'children': noChildren ? undefined : [{ text: 'Loading...', state: "disabled" }],
             }, 'last', false, false);
-            if($parent_node){
-              root.jstree('open_node', $(parent_node))
+            if ($parent_node) {
+                root.jstree('open_node', $parent_node)
             }
         }
     }
