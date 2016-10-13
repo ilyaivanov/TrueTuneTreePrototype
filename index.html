@@ -47,6 +47,10 @@
     </nav>
     <article class="content-article">
         <h1>Favorites</h1>
+        <div class="search-results">
+            <div id="jstreeFavorites"></div>
+        </div>
+        <button>create</button>
     </article>
     <aside class="content-sidebar">
         <h1>Player</h1>
@@ -57,13 +61,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="src/util.js"></script>
 <script src="src/lastfm.js"></script>
 <script src="src/artists.js"></script>
 <script src="src/app.js"></script>
+<script src="src/favorites.js"></script>
 <script>
-  $(function () {
-    app.init($('#jstreeSearch'), $('#searchInput'))
-  });
+    $(function () {
+        app.init($('#jstreeSearch'), $('#searchInput'));
+        favorites.init($('#jstreeFavorites'));
+    });
+
+
 </script>
 </body>
 </html>
