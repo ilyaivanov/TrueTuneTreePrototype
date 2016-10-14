@@ -9,7 +9,26 @@ var favorites = (function () {
                     'check_callback': true,
                     data: initialData
                 },
-                "plugins": []
+                "plugins": ["contextmenu"],
+                contextmenu: {
+                    items: {
+                        "rename": {
+                            "separator_before": false,
+                            "separator_after": false,
+                            "_disabled": false, //(this.check("rename_node", data.reference, this.get_parent(data.reference), "")),
+                            "label": "Rename",
+                            "shortcut": 113,
+                            "shortcut_label": 'F2',
+                            "icon": "glyphicon glyphicon-leaf",
+                            "action": function (data) {
+                                console.log(data.reference);
+                                var inst = $.jstree.reference(data.reference),
+                                    obj = inst.get_node(data.reference);
+                                inst.edit(obj);
+                            }
+                        }
+                    }
+                }
             });
 
             loadTracksOrAlbums(root, () => saveState(root));
@@ -37,7 +56,7 @@ var favorites = (function () {
         saveState(this.root);
     }
 
-    let saveState = _.debounce(function(root){
+    let saveState = _.debounce(function (root) {
         var json = JSON.stringify(root.jstree('get_json'));
         localStorage.setItem('prototypeState', json);
         console.log('saved')
