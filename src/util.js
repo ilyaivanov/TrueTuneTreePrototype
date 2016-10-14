@@ -24,14 +24,16 @@ function isTrack(node) {
     return node.icon == 'song.png';
 }
 
-function loadTracksOrAlbums(root) {
+function loadTracksOrAlbums(root, callback) {
     root.on('before_open.jstree', function (e, data) {
         if (isAlbum(data.node)) {
             artists.fintTracks(data.node.parent, data.node.text)
-                .then(albums => mapTracks(root, albums, data.node));
+                .then(albums => mapTracks(root, albums, data.node))
+                .then(callback);
         } else if (isArtist(data.node)) {
             artists.findAlbumsXml(data.node.data.id)
-                .then(albums => mapAlbums(root, albums, data.node));
+                .then(albums => mapAlbums(root, albums, data.node))
+                .then(callback);
         }
     });
 }

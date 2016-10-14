@@ -32,7 +32,7 @@ var app = {
                 'core': {
                     'check_callback': true,
                 },
-                "plugins": ["wholerow", "contextmenu"],
+                "plugins": [ "contextmenu"],
                 contextmenu: contextmenu
             });
 
